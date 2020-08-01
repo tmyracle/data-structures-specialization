@@ -1,14 +1,31 @@
 #include <algorithm>
 #include <iostream>
 #include <vector>
+#include <iterator>
+#include <map>
 
 using std::vector;
+using std::map;
+using std::iterator;
 
 int get_majority_element(vector<int> &a, int left, int right) {
-  if (left == right) return -1;
-  if (left + 1 == right) return a[left];
   //write your code here
-  return -1;
+  int answer = -1;
+  map<int, int> valueCounts;
+  for (int i = left; i < right; ++i) {
+    valueCounts[a[i]]++;
+  }
+
+  map<int, int>::iterator it = valueCounts.begin();
+
+  for (std::pair<int, int> element: valueCounts) {
+    if (element.second > (a.size()/2)) {
+      answer = 1;
+      break;
+    }
+  }
+
+  return answer;
 }
 
 int main() {
